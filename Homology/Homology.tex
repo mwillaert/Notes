@@ -1,0 +1,405 @@
+\documentclass[a4paper,12pt,parskip=half*,chapterprefix=true,numbers=noendperiod]{scrreprt}
+
+% LANGUAGES AND SYMBOLS
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{xparse}
+
+% EVERYDAY PACKAGES
+\usepackage{lipsum}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim}
+\usepackage[normalem]{ulem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{easy-todo}
+\usepackage{setspace}
+%\usepackage[all]{nowidow}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% MATHEMATICS
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{amsthm, thmtools}
+\usepackage{framed}
+\usepackage{nameref}
+\usepackage[colorlinks,menucolor=blue,linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref} 
+\usepackage[capitalise]{cleveref}% if problems, load cleveref last
+\crefname{subsection}{Subsection}{Subsections}
+\Crefname{subsection}{Subsection}{Subsections}
+%\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{amssymb}
+\usepackage[mathscr]{euscript}
+\usepackage{esint}
+\usepackage{esvect}
+\usepackage{relsize}
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage[framemethod=tikz]{mdframed}
+\usetikzlibrary{cd}
+\usetikzlibrary{matrix}
+\usetikzlibrary{backgrounds}
+
+%Packages for references, Indices
+
+\usepackage{imakeidx}[intoc]
+\usepackage{biblatex}
+\addbibresource{../refs.bib}
+
+%Additionnal Packages
+
+\usepackage{float}
+\usepackage{cancel}
+
+%Macors
+
+\newcommand{\opname}{\operatorname}
+
+%Theorems
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Homology}
+\author{Maxime Willaert}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\part{Homological Algebra, Lectures of Tim Van der Linden \cite{vanderLinden:Homology}}
+
+\chapter{Remaining questions}
+
+Proof that the dimension of a free module over a commutative ring is well-defined using Krull's theorem (example \ref{ex:ModuleDimension}).
+
+\chapter{Modules over a ring, exact sequences and homology}
+
+Based on lectures given by Tim Van der Linden in 2022-2023 \cite{vanderLinden:Homology} (might turn out to be a copy).
+
+\section{Modules over a ring}
+
+The rings are not assumed to be commutative, only to possess a unit 1.
+\begin{definition}[Ring]
+	A \textbf{ring} is an abelian group $R$ (written additively) together with a binary operation
+	\begin{equation*}
+		\cdot:R\times R\to R,(r,a)\to r\cdot a\overset{n}{=} ra
+	\end{equation*}
+	such that $(R,\cdot)$ is a monoid with unit $1$, and such that $\cdot$ is distributive over $+$, meaning that for all $a,a',r,r'\in R$
+	\begin{enumerate}[(i)]
+		\item (Left-distributivity) $r(a+a')=ra+ra'$;
+		\item (Right-distributivity) $(r+r')a=ra+ra'$.
+	\end{enumerate}
+	
+	Given two rings $R$, $S$ a ring morphism $R\to S$ is a group of morphism $R\to S$ that is also a monoid morphism $(R,\cdot)\to (S,\cdot)$. In other words a ring morphism is a map $\phi:R\to S$ such that
+	\begin{enumerate}[(i)]
+		\item For all $r,r'\in R$, $\phi(r+r')=\phi(r)+\phi(r')$;
+		\item For all $r,r'\in R$, $\phi(rr')=\phi(r)\phi(r')$;
+		\item $\phi(1)=1$.
+	\end{enumerate}
+\end{definition}
+
+\begin{example}
+	By definition, a monoid is always with unit (or identity). A nonzero ring with commutative multiplication and multiplicative inverses for every non-zero element is called a \textbf{field}. Note that in any ring $R$ we have $0a=(0+0)a=0a+0a$ which implies $0a=0$ (and similarly we have $a0=0$), so unless $0=1$, $0$ cannot admit a multiplicative inverse, and $1=0$ if and only if $R$ is the \textbf{zero ring} (the ring with one element, denoted $0$).
+\end{example}
+\begin{example}
+	Let $R,S$ be two rings with $S$ nonzero (for example we could choose $R=S=\mathbb{Z}_2$). The zero map $0:R\to S$ sending $R$ to $0\in S$ is a group morphism such that $0(rr')=0=00=0(r)0(r')$ for all $r,r'\in R$. However $0(1)\neq 1$ so we see that removing the requirement that the multiplicative identity be preserved from the definition of a ring morphism results in a strictly weaker definition. In other words, the category \textbf{Ring} of unitary rings (rings with multiplicative identity) is \emph{not} a full subcategory of \textbf{Rng}, the category of \textbf{pseudo-rings} (the object obtained by removing the requirement for a multiplicative identity from the definition of a ring - also called a ring by some authors).
+\end{example}
+
+Modules are to rings what vector spaces are to fields.
+
+\begin{definition}[Module]
+	Let $R$ be a ring. A \textbf{left $R$-module} is an abelian group $A$ (written additively) together with an operation (scalar multiplication)
+	\begin{equation*}
+		\cdot:R\times A\to A,(r,a)\to r\cdot a\overset{n}{=}ra
+	\end{equation*}
+	such that for all $r,r'\in R$, $a,a'\in A$
+	\begin{enumerate}[(i)]
+		\item (Distributivity) $(r+r')a=ra+r'a$ and $r(a+a')=ra+ra'$;
+		\item (Multiplicative compatibility) $(rr')a=r(r'a)$;
+		\item (Identity) $1a=a$.
+	\end{enumerate}
+	
+	Given two left $R$-modules, $A$ and $B$, an \textbf{$R$-linear map} (or morphism of $R$-modules) $A\to B$ is a group morphism (for the abelian group structure of $A$ and $B$) $\phi:A\to B$ such that $\phi(ra)=r\phi(a)$ for $r\in R$, $a\in A$. \textbf{Isomorphisms} are define in the usual way (as invertible $R$-linear maps with $R$-linear inverses), it turns out that the inverse of a bijective $R$-linear map is automatically $R$-linear, so that isomorphisms of $R$-modules are exactly the bijective $R$-linear maps.
+\end{definition}
+\begin{remark}
+	An $R$-linear map $\phi:A\to B$ necessarily sends $0\in A$ to $0\in B$ as a morphism of abelian groups. Furthermore, for any pair of $R$-modules $A$, $B$ the \textbf{zero map} sending $A$ to $0\in B$ is trivially $R$-linear.
+\end{remark}
+\begin{remark}
+	We can define \textbf{right $R$-modules} in the obvious way. Given a ring $R$ we can define the \textbf{opposite ring $R^{op}$} with the same underlying set, the same addition and reversed multplication, i.e. $r\cdot_{op}r':=r'r$ for $r,r'\in R$. We can then see that right $R$-modules are exaclty left $R^{op}$-modules. For a commutative ring $R=R^{op}$ and there is no distinction between left and right $R$-modules. In what follows we'll often use "$R$-modules" to refer to \emph{left} $R$-modules.
+\end{remark}
+\begin{example}
+	Any ring $R$ is canonically a module over itself. For any ring $R$ there also exists a \textbf{zero $R$-module}, a module with a single element (which must be $0$) denoted by $0$.
+\end{example}
+\begin{example}
+	For a field $\mathbb{F}$, a (left or right) $\mathbb{F}$-module is a \textbf{vector space} over $\mathbb{F}$.
+\end{example}
+\begin{example}
+	For an $R$-module $A$, we have $0a=(0+0)a=0a+0a$ implying $0a=0$. Combining this with the identity ($1a=a$) we see that the only module over $0$ (the zero ring) is the \textbf{zero module} (the module with one element, also denoted $0$), which is in fact $0$ itself.
+\end{example}
+\begin{example}
+	By definition any $\mathbb{Z}$-module comes with an abelian group structure. Conversely, an abelian group $A$ admits a unique scalar product making $A$ into a $\mathbb{Z}$-module. So we see that the $\mathbb{Z}$-modules are the abelian group (there is an isomorphism of category $\text{Ab}\simeq\mathbb{Z}\text{-Mod}$).
+\end{example}
+
+\begin{definition}[Submodules]
+	Let $A$ be an $R$-module. Given a subset $S$ of $A$, we say that $S$ is a \textbf{submodule} (or $R$-submodule) of $A$ if $S$ admits an $R$-module structure for which the injection $\iota:S\hookrightarrow A$ is $R$-linear. We can show that $S$ is a submodule of $A$ if and only if
+	\begin{enumerate}[(i)]
+		\item $S$ is a subgroup of $A$ (automatically abelian);
+		\item For all $r\in R$, $s\in S$, $rs\in S$.
+	\end{enumerate}
+	In that case the $R$-module structure for which $\iota:S\hookrightarrow A$ is $R$-linear is unique, and obtained by restricting the operations of $A$ to $S$.
+\end{definition}
+
+\begin{proposition}
+	Submodules are stable by intersection, meaning that for an $R$-module $A$ and a family $(S_i)_{i\in I}$ of submodules of $A$, $\bigcap_{i\in I}S_i$ is a submodule of $A$.
+\end{proposition}
+
+\begin{definition}[Quotient by a submodule]
+	Let $A$ be an $R$-module, and $S$ be a submodule of $A$. For $a,a'\in A$ we write $a\sim_S a'$ if $(a-a')\in S$. $\sim_S$ is then an equivalence relation on $A$, and we can define the quotient $q:A\to A/S:=A/\sim_S$. The \textbf{quotient} of $A$ by $S$ is then defined to be $A/S$ equipped with the unique $R$-module structure for which $q:A\to A/S$ is $R$-linear. The image of $a\in A$ by $q:A\to A/S$ (so the equivalence class of $a$ for $\sim_S$) is often denoted by $a+S$.
+\end{definition}
+\begin{definition}[Kernel, image and cokernel]
+	Given an $R$-linear map $\phi:A\to B$. The \textbf{image} $\opname{im}(\phi)$ of $\phi$ is a submodule of $B$, while the \textbf{kernel} of $\phi$ is defined to be submodule $\ker(\phi):=\{a\in A|\phi(a)=0\}$. The \textbf{cokernel} of $\phi$ is the quotient $q:B\to B/\opname{im}(\phi)$ of $B$ by the image of $\phi$.
+\end{definition}
+
+\begin{proposition}
+	Given an $R$-linear map $\phi:A\to B$
+	\begin{enumerate}[(i)]
+		\item $\phi$ is injective if and only if $\ker(\phi)=0$;
+		\item $\phi$ is surjective if and only if $\opname{coker}(\phi)=0$.
+	\end{enumerate}
+	In particular $\phi$ is an isomorphism if and only if both $\ker(\phi)$ and $\opname{coker}(\phi)$ are zero.
+\end{proposition}
+
+\begin{definition}[Span of a subset]
+	Let $X$ be a subset of an $R$-module $A$. The \textbf{span} $\langle X\rangle$ is defined to be the smallest submodule of $A$ containing $X$, so
+	\begin{equation*}
+		\langle X\rangle:=\bigcap\{S\text{ submodule of }A|X\subseteq S\}.
+	\end{equation*}
+	$\langle X\rangle$ consists of the (finite) linear combinations of elements of $X$ (another possible definition of $\langle X\rangle$)
+	\begin{equation*}
+		\langle X\rangle=\{\sum_{i=1}^kr_ix_i|0\leq k <\infty, r_j\in R, x_j\in X\}.
+	\end{equation*}
+\end{definition}
+
+
+\subsection{Free modules}
+
+\begin{definition}[Free over a set]
+	Let $A$ be an $R$-module and let $\delta:X\to R$ be a map from a set $X$ to the underlying set of $R$. We say that $R$ is \textbf{free over $X$} (or $\delta$ to be more precise) if for any map $\xi:X\to B$ there exists a unique $R$-linear map $\alpha:A\to B$ such that the following diagram commutes
+	\begin{figure}[H]
+		\centering
+		\begin{tikzcd}
+            & A \arrow[d, "\alpha", dotted] \\
+			X \arrow[ru, "\delta"] \arrow[r, "\xi"'] & B                            
+		\end{tikzcd}
+	\end{figure}
+\end{definition}
+
+\begin{definition}[The free module over a set]
+	Given a set $X$ there exists an $R$-module $R[X]$ together with an set map $\delta:X\to R[X]$ such that $R[X]$ is free over $\delta$. The pair $(R[X],\delta)$ is unique up to isomorphism (as for any other object defined by means of a universal property) and $\delta$ is injective.
+\end{definition}
+\begin{proof}
+We'll construct a \textbf{standard version} of $(R[X],\delta)$. $R[X]$ consists of the \textbf{almost zero} functions $\phi:X\to R$, meaning that the support $\operatorname{supp}\phi:=\{x\in X|\phi(x)\neq 0\}$ is finite, equipped with pointwise addition and scalar multiplication. The injection $\delta:X\to R[X]$ sends $x\in X$ to the indicator function of $x$
+\begin{equation*}
+	\delta(x)\overset{n}{=}\delta_x\overset{n}{=}x:X\to R,y\to\begin{cases} 1,\text{ if }x=y\\
+	0,\text{ if }x\neq y
+	\end{cases}
+\end{equation*}
+
+Any nonzero element $\phi$ of $R[X]$ is written uniquely $\phi=\sum_{i=1}^kr_ix_i$ for $x_1,...,x_k\in X$ distinct and $r_i=\phi(x_i)\in R-\{0\}$. Given a map $\xi:X\to B$ from $X$ to another $R$-module $B$, the unique factoring map $\alpha:R[X]\to B$ sends $\phi=\sum_{i=1}^kr_ix_i$ to $\sum_{i=1}^kr_i\xi(x_i)$.
+\end{proof}
+
+\begin{remark}
+	From now on we'll use $(R[X],\delta)$ to refer to the standard free module over $X$.
+\end{remark}
+\begin{remark}
+	The universal property of the free module over $X$ can be stated as follows: for any $R$-module $A$, we have a canonical bijection
+	\begin{equation*}
+		\text{Set}(X,UA)\simeq\opname{Hom}(R[X],A)
+	\end{equation*}
+	where $U$ denotes the forgetful functor $U:R\text{-Mod}\to\text{Set}$. So we see that the existence of free modules is equivalent to the existence of a left-adjoint to the forgetful functor. The universal map $\delta:X\to R[X]$ is the counit of this adjunction.
+\end{remark}
+
+\begin{proposition}	
+	Given an $R$-module $A$, a set $X$ and a map $\xi:X\to A$. By the universal property the free module, there exists a unique $R$-linear map $\alpha:R[X]\to A$ such that
+	\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+    & {R[X]} \arrow[d, "\alpha", dotted] \\
+	X \arrow[ru, "\delta"] \arrow[r, "\xi"'] & A                                 
+	\end{tikzcd}
+	\end{figure}
+	commutes. $A$ is free over $\xi$ if and only if $\alpha$ is an isomorphism. In particular $\xi$ must be injective (for $A$ to be free over $\xi$).
+\end{proposition}
+
+\begin{definition}[Basis of a module]
+	Let $A$ be an $R$-module. A subset $X\subseteq A$ is a \textbf{basis} of $A$ if $A$ is free over the injection $\iota:X\hookrightarrow A$. In other words, $X$ is a basis of $A$ if and only if for any $R$-module $B$, any map $\phi:X\to B$ extends uniquely to an $R$-linear map $\bar{\phi}:A\to B$. 
+\end{definition}
+
+\begin{proposition}
+	Given an $R$-module $A$, a set $X$ and a map $\xi:X\to A$, $A$ is free over $\xi$ if and only if $\xi$ is injective and $\opname{im}(\xi)\subseteq A$ is a basis of $A$.
+\end{proposition}
+\begin{remark}
+	Given a set $X$, $X$ is a basis of $R[X]$ (when identified with its image by $\delta$).
+\end{remark}
+
+\begin{proposition}
+	Let $X$ be a subset of the $R$-module $A$. By the universal property of the free module, there exists a unique map $\alpha:R[X]\to A$ such that
+	\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+    & {R[X]} \arrow[d, "\alpha", dotted] \\
+	X \arrow[ru, "\delta"] \arrow[r, "\iota"', harpoon, hook] & A                                 
+	\end{tikzcd}
+	\end{figure}
+	commutes. $X$ is a basis of $X$ if and only if $\alpha$ is an isomorphism.
+\end{proposition}
+
+\begin{corollary}
+	A subset $X$ of an $R$-module $A$ is a basis of $A$ if and only if
+	\begin{enumerate}[(i)]
+		\item $X$ is \textbf{linearly independent}, meaning that for $1\leq k$ and $x_j\in X$, $r_j\in R$
+		\begin{equation*}
+			\sum_{i=1}^kr_ix_i=0
+		\end{equation*}
+		if and only if $r_1=...=r_k=0$. This is equivalent to requiring that the unique factoring map $\alpha:R[X]\to A$ be injective.
+		\item $X$ \textbf{spans} $A$, meaning that $\langle X\rangle=A$ (i.e. that any element of $A$ is a finite linear combination of elements of $X$). This is equivalent to requiring that the unique factoring map $\alpha:R[X]\to A$ be surjective. 
+	\end{enumerate}
+	Equivalently $X$ is a basis of $A$ if and only if for any $a\in A$ there exists a unique almost zero map $\xi:X\to R$ such that
+	\begin{equation*}
+		a=\sum_{x\in X}\xi(x)x.
+	\end{equation*}
+\end{corollary}
+
+\begin{definition}[Free module]
+	We say that the $R$-module $A$ is \textbf{free} if $A$ admits a basis.
+\end{definition}
+
+\begin{example}
+	The zero module over $R$ is free with basis $\emptyset$. This is because for any $R$-module $A$, $\text{Hom}(0,A)=\{*\}$ as the only $R$-linear map $0\to A$ is the zero map sending $0\in 0$ to $0\in A$, while $\text{Set}(\emptyset,A)=\{*\}$ as $\emptyset$ is initial in $\text{Set}$ (for any set $Y$, the empty map $\emptyset\subseteq\emptyset\times Y=\emptyset$ is the only map $\emptyset\to Y$).
+\end{example}
+\begin{example}
+	Any ring $R$ is canonically a free module over itself, with basis $\{1\}$. $1=0$ is a basis of the zero ring, since the only module over $0$ is $0$ itself.
+\end{example}
+\begin{example}
+	We know that $\mathbb{Z}_2$ is a free module over itself, but as an abelian group $\mathbb{Z}_2$ is also a $\mathbb{Z}$-module. Since $\mathbb{Z}_2$ is \textbf{torsion} (all elements of $\mathbb{Z}_2$ have finite order), $\mathbb{Z}_2$ admits no nonempty $\mathbb{Z}$-linearly independent subset, so $\mathbb{Z}_2$ is \emph{not} free as a $\mathbb{Z}$-module. This applies to any nonzero abelian torsion group, in particular for any $n\geq 2$, $\mathbb{Z}_n$ is not free as a $\mathbb{Z}$-module (the trivial abelian group $\mathbb{Z}_1=0$ is free as a $\mathbb{Z}$-module with empty basis, see previous example).
+	
+	This shows that not all modules are free, and that when discussing bases and free modules, specifying the base ring is of crucial importance.
+\end{example}
+\begin{example}\label{ex:ModuleDimension}
+	The fact that the zero ring seen as an $0$-module admits both $\{1=0\}$ and $\emptyset$ as bases already shows that the dimension of a free module is not well-defined in general. We can find an example that is not as trivial. Let $\mathbb{F}$ be a field, and let $V$ be the free vector space $\mathbb{F}(\mathbb{N})$ with basis $\{v_0,...,v_n,...\}$. Let $R:=\text{End}(V)$ be the ring of endomorphisms of $V$. Define $\phi,\psi\in R$ by $\phi(v_n)=v_{2n}$ and $\psi(v_n)=v_{2n+1}$. Let $L\in R$, there exist unique families $(A^i_j)_{i,j\in\mathbb{N}}$ and $(B^i_j)_{i,j\in\mathbb{N}}$ such that
+	\begin{equation*}
+		L(v_m)=\sum_{n\in\mathbb{N}}\left(A^n_mv_{2n}+B^n_{m}v_{2n+1}\right)
+	\end{equation*}
+and we see that $A,B\in R$ defined by $A(v_m)=\sum_{n\in\mathbb{N}}A^n_mv_n$, $B(v_m)=\sum_{n\in\mathbb{N}}B^n_mv_n$ are the only pair of elements of $R$ such that
+\begin{equation*}
+	L=\phi\circ A+\psi\circ B.
+\end{equation*}
+	This shows that $\{\phi,\psi\}$ is a basis for $R$ seen as a right module over itself. But we also know that $\{1_V\}$ is a basis for $R$. Using Krull's theorem on the existence of maximal ideals (which is equivalent to Zorn's lemma), one can show that the dimension of a free module over a \textbf{commutative} ring \emph{is} well-defined.
+\end{example}
+
+\subsection{Representations of groups and monoids}
+
+\begin{definition}[Monoid]
+	A \textbf{monoid} is a set $M$ with a binary operation
+	\begin{equation*}
+		\cdot:M\times M\to M,(a,b)\to a\cdot b\overset{n}{=} ab
+	\end{equation*}
+	which is associative and for which there exists a \textbf{unit} (or \textbf{identity element}) $1$.
+	
+	Given two monoids $M$, $N$, a morphism of monoids $M\to N$ is a map $\phi:M\to N$ such that
+	\begin{enumerate}[(i)]
+		\item For all $a,b\in M$, $\phi(ab)=\phi(a)\phi(b)$;
+		\item $\phi(1)=1$.
+	\end{enumerate}
+\end{definition}
+
+\begin{example}
+	$\{0,1\}$ equipped with the $\vee$ operation
+	\begin{center}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	$\vee$ & 0 & 1 \\
+	\hline
+	0 & 0 & 1 \\
+	\hline
+	1 & 1 & 1 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	is a monoid with identity $0$, which we denote by OR. Let $0$ be the monoid with one element (the \textbf{zero monoid}, written additively) and let $1:0\to\text{OR}$ be the unique map sending $0\in 0$ to $1\in\text{OR}$ verifies $1(0+0)=1=1\vee 1=1(0)\vee 1(0)$ but $1(0)=1$ is \emph{not} the identity of OR. So we see that removing the requirement that the identity be preserved from the definition of monoid morphism would yield a non-equivalent definition. In other words monoids do not form a full subcategory of semigroups. Recall that a magma is a set equipped with an internal binary operation, while a semigroup is an associative magma. A monoid is a semigroup with identity.
+\end{example}
+\begin{example}
+	A \text{group} is a monoid $G$ such that any element has a (left and right) inverse. If it exists, such an inverse is unique, so when a monoid $G$ admits an inverse map $G\to G$ making it into a group, this map is unique (a monoid admits at most one compatible group structure). Given two groups $G,H$, a magma morphism $G\to H$ will automatically preserve identities and inverses, so groups form a full subcategory of magmas (and semigroups and monoids).
+\end{example}
+
+\begin{definition}[Representation]
+	Let $M$ be a monoid and let $R$ be a ring. An $R$-linear \textbf{representation} of $M$ over $A$ is a monoid morphism $M\to\text{End}(A)$, where $\text{End}(A)$ is defined to be the monoid of endomorphisms of $A$, that is the monoid consisting of $R$-linear maps $A\to A$.
+	
+	In the event that $M$ is a group, the image of $M$ in $\text{End}(A)$ (which will always be a submonoid) will automatically be a subgroup of $\text{Aut}(A)$, the group of automorphisms of $A$ (i.e. bijective $R$-linear maps $A\to A$). And indeed, an $R$-linear representation of a group $G$ over $A$ is defined to be a group morphism $G\to\text{Aut}(A)$.
+\end{definition}
+
+\begin{definition}[Monoid (group) ring]
+	Given a monoid $M$ and a ring $R$, the \textbf{monoid ring} $R[M]$ of $M$ over $R$ is the free $R$-module $R[M]$ over $M$ with the multiplication obtained by extending the product of $M$ linearly, meaning that for two almost zero maps $\phi,\psi:M\to R$ we set
+	\begin{equation*}
+		\phi\psi:=\sum_{a,b\in M}\phi(a)\phi(b)ab.
+	\end{equation*}
+	When $M$ is a group $G$, we call $R[G]$ the \textbf{group ring} of $G$ over $R$.
+\end{definition}
+\begin{remark}
+	When $R$ is a commutative ring, the product of $R[M]$ is $R$-bilinear i.e. for any $\phi, \phi',\psi,\psi'\in R[M]$, $r\in R$
+	\begin{enumerate}[(i)]
+		\item $\phi(\psi+\psi')=\phi\psi+\phi\psi'$ and $(\phi+\phi')\psi=\phi\psi+\phi'\psi$;
+		\item $r(\phi\psi)=(r\phi)\psi=\phi(r\psi)$.
+	\end{enumerate}
+	Thus in that case $R[M]$ is an associative $R$-algebra (not just an $R$-module), called the monoid (group) algebra of $M$ (or $G$) over $R$.
+\end{remark}
+\begin{theorem}\label{thm:MonoidRingRepresentation}
+	Let $M$ be a monoid and $R$ be a ring. There is a one-to-one correspondence between $R$-linear representations of $M$ and $R[M]$-modules. Of course this applies to group representations as well.
+\end{theorem}
+\begin{proof}
+Let $A$ be an $R$-module and let
+\begin{equation*}
+	\rho:M\to\text{End}(A),m\to\rho(m)\overset{n}{=}\rho_m
+\end{equation*}
+be a representation of $M$ over $A$. We make $A$ into an $R[M]$-linear module by setting $ma:=\rho_ma$ for all $m\in M$, and $a\in A$, and extending in the only possible, meaning that for an almost zero map $\phi:M\to R$ and $a\in A$ we have
+\begin{equation*}
+	\phi a=\sum_{m\in M}\phi(m)\rho_ma.
+\end{equation*}
+
+Let $A$ be an $R[M]$-module. The universal property of free modules guarantees the existence of a unique $R$-linear map $R\to R[M]$ sending $1\in R$ to the identity $e$ of $M$. This map is in fact a ring morphism, and through this ring morphism $A$ is canonically an $R$-module. For $m\in M$, we define $\rho_ma:=ma$, where $ma$ is the multiplication of $a\in A$ by $m\in R[M]$). The resulting map $\rho:M\to\text{End}(A)$ (where $\text{End}(A)$ is the monoid of $R$-linear maps $A\to A$).
+
+These two processes are clearly inverse to each other, and the equations that $\rho:M\to\text{End}(A)$ must satisfy to be a monoid morphism are exactly the equations that $\cdot:R[M]\times A\to A$ must satisfy to be an $R[M]$-module.
+\end{proof}
+
+\begin{example}
+	The case of the monoid $\mathbb{N}$ (with addition) is interesting. $\mathbb{N}$ is the free monoid over the singleton, with basis $\{1\}$, meaning that given another monoid $M$, the datum of a monoid morphism $\mathbb{N}\to M$ is equivalent to a choice of element $a\in M$. The monoid morphism corresponding to the element $a\in M$ sends $n\in\mathbb{N}$ to $na:=\underbrace{a+...+a}_{n\text{ times}}$ (where we write the operation of $M$ additively). 
+	
+Given a field $\mathbb{F}$ and a vector space $V$ over $\mathbb{F}$, an $\mathbb{F}$-linear representation of $\mathbb{N}$ over $V$, so a monoid morphism $\mathbb{N}\to\text{End}(V)$, is equivalent to a choice of endomorphism $\tau:V\to V$. By theorem \ref{thm:MonoidRingRepresentation}, an $\mathbb{F}$-linear representation of $\mathbb{N}$ is equivalent to an $\mathbb{F}(\mathbb{N})$-module. As it turns out, $\mathbb{F}(\mathbb{N})$ is the associative (and commutative) $\mathbb{F}$-algebra $\mathbb{F}[x]$ of polynomials over $\mathbb{F}$ with one variable. Thus we see that an $\mathbb{F}[x]$-module is equivalent to the data of a vector space $V$ over $\mathbb{F}$ together with a choice of endomorphism $\tau:V\to V$. The (compatible) $\mathbb{F}[x]$-module structure on $V$ corresponding to $\tau\in\text{End}(V)$ is given by
+\begin{equation*}
+(\sum_{k=0}^ns_kx^k)v=\sum_{k=0}^ns_k\tau^k(v)
+\end{equation*}
+for all $v\in V$ and $\sum_{k=0}^ns_kx^k\in\mathbb{F}[x]$.
+\end{example}
+
+\printbibliography
+
+\end{document}
