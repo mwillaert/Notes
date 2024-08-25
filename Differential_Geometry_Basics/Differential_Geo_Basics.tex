@@ -1,0 +1,214 @@
+\documentclass[a4paper,12pt,parskip=half*,chapterprefix=true,numbers=noendperiod]{scrreprt}
+
+% LANGUAGES AND SYMBOLS
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{xparse}
+
+% EVERYDAY PACKAGES
+\usepackage{lipsum}
+\usepackage[shortlabels]{enumitem}
+\usepackage{verbatim}
+\usepackage[normalem]{ulem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{easy-todo}
+\usepackage{setspace}
+%\usepackage[all]{nowidow}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% MATHEMATICS
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{amsthm, thmtools}
+\usepackage{framed}
+\usepackage{nameref}
+\usepackage[colorlinks,menucolor=blue,linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref} 
+\usepackage[capitalise]{cleveref}% if problems, load cleveref last
+\crefname{subsection}{Subsection}{Subsections}
+\Crefname{subsection}{Subsection}{Subsections}
+%\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage{amssymb}
+\usepackage[mathscr]{euscript}
+\usepackage{esint}
+\usepackage{esvect}
+\usepackage{relsize}
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage[framemethod=tikz]{mdframed}
+\usetikzlibrary{cd}
+\usetikzlibrary{matrix}
+\usetikzlibrary{backgrounds}
+
+%Packages for references, Indices
+
+\usepackage{imakeidx}[intoc]
+\usepackage{biblatex}
+\addbibresource{../refs.bib}
+
+%Additionnal Packages
+
+\usepackage{float}
+\usepackage{cancel}
+
+%Macors
+
+\newcommand{\opname}{\operatorname}
+
+%Theorems
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Basics of Differential Geometry}
+\author{Maxime Willaert}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\part{Topology}
+
+\chapter{Intro}
+
+Main references are \cite{Munkres:Top,Lee:IntTopMan}.
+
+\section{Things left to learn}
+
+The different sets of axioms one can use to define a topological space, as in \cite{Wiki:AxiomTop}. A topological space is most commonly defined by specifying its open sets. But one can also define a topology in the following ways:
+\begin{enumerate}[(i)]
+	\item By specifying its neighborhoods or closed sets.
+	\item By specifying the interior, closure, exterior, boundary or 'derived set' operators.
+	\item Through nets or filters (which are equivalent).
+\end{enumerate}
+The notions of \textbf{nets} and \textbf{filters}, their equivalence and their relationship with the notion of a topology, should be explored (see \cite{Wiki:FiltersTop}). The different notions of convergence that can be defined in a topology, and the degree to which they determine this topology is also an interesting question \cite{Wiki:SequentialSpace,Wiki:ConvergenceSpace}.
+
+General topology (more set-theoretic than algebraic, and not focused on finite-dimensional topological manifolds) as in \cite{Munkres:Top}.
+
+\chapter{Topological spaces}
+
+\begin{definition}[Topology]
+A \textbf{topology} on a set $X$ is a collection $\tau$ of subsets of $X$ such that
+\begin{enumerate}[(i)]
+	\item $\tau$ contains $\emptyset$ and $X$;
+	\item The union of the elements of any subset of $\tau$ is again in $\tau$;
+	\item The intersection of the elements of any finite subset of $\tau$ is again in $\tau$.
+\end{enumerate}
+A \textbf{topological space} is a pair $(X,\tau)$ consisting of a set $X$ together with a topology $\tau$ on $X$. The elements of $\tau$ are called the \textbf{open sets} of $(X,\tau)$.
+
+Given two topological spaces $(X,\tau)$, $(X',\tau')$, a map $f:(X,\tau)\to(X',\tau')$ is said to be \textbf{continuous} if for any $U\in\tau'$, $f^{-1}(U)\in\tau$. In most instances we can omit $\tau$ when referring to the topological space $(X,\tau)$ with no risk of confusion.
+\end{definition}
+
+\begin{definition}[Neighborhoods]
+	Let $X$ be a topological space.
+	\begin{enumerate}[(i)]
+		\item Let $K$ be a subset of $X$, another subset $N$ of $X$ is said to be a \textbf{neighborhood} of $K$ if there exists an open subset $U$ of $X$ such that $K\subseteq U\subseteq N$. An \textbf{open neighborhood} of $K$ is an open subset of $X$ that contains $K$.
+		\item Let $x$ be a point of $X$. An (open) neighborhood of $x$ is an (open) neighborhood of the singleton $\{x\}$.
+	\end{enumerate}	
+\end{definition}
+
+\begin{definition}[Closed subsets]
+A subset $F$ of $X$ is said to be \textbf{closed} if its complement $X-F$ is open.
+\end{definition}
+
+\begin{proposition}
+Let $X$ be a topological space.
+\begin{enumerate}[(i)]
+	\item $\emptyset$ and $X$ are closed.
+	\item Any intersection of closed subsets of $X$ is closed.
+	\item A finite unions of closed subsets of $X$ is closed.
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+	A map between topological spaces is continuous if and only the preimage of any closed subset is closed.
+\end{proposition}
+\begin{proof}
+	This is because for any map $f:X\to Y$ and any subset $A\subseteq Y$, $f^{-1}(Y-A)=X-f^{-1}(A)$.
+\end{proof}
+
+\begin{definition}[Closure and interior]
+	Let $A$ be a subset of a topological space $X$.
+	\begin{enumerate}[(i)]
+		\item The \textbf{closure} of $A$, denoted $\bar{A}$ is the smallest closed subset containing $A$.
+		\begin{equation*}
+			\bar{A}:=\bigcap\{F\subseteq X|S\text{is closed and }A\subseteq F\}.
+		\end{equation*}
+		\item The \textbf{interior} of $A$, denoted $\text{Int}(A)$ is the largest open subset contained in $A$.
+		\begin{equation*}
+			\text{Int}(A):=\bigcup\{U\subseteq X|U\text{is open and }U\subseteq A\}.
+		\end{equation*}
+		\item The \textbf{exterior} of $A$, denoted by $\text{Ext}(A)$, is defined to by $\text{Ext}(A):=X-\bar{A}$, it is the complement of the closure, that is the largest open that does not overlap with $A$.
+		\item The \textbf{boundary} of $A$, denoted by $\partial A$ is defined by $\partial A:=\bar{A}-\text{Int}(A)$.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+Let $A$ be a subset of an topological space $X$.
+\begin{enumerate}[(i)]
+	\item A point is in $\text{Int}(A)$ if and only if it has a neighborhood contained in $A$.
+	\item A point is in $\text{Ext}(A)$ if and only if it has a neighborhood contained in $X-A$.
+	\item A point is in $\partial A$ if and only if any neighborhood of it contains both a point of $A$ and a point of $X-A$.
+	\item A point is in $\bar{A}$ if and only if any neighborhood of it contains a point of $A$.
+	\item The following are equivalent:
+	\begin{itemize}
+		\item $A$ is open.
+		\item $A=\text{Int}(A)$.
+		\item $A$ contains none of its boundary points (hence the 'open terminology').
+		\item Any point of $A$ has a neighborhood contained in $A$.
+	\end{itemize}
+	\item The following are equivalent:
+	\begin{itemize}
+		\item $A$ is closed.
+		\item $A=\bar{A}$.
+		\item $A$ contains all of its boundary points (hence the 'closed' terminology).
+		\item Any point of $X-A$ has a neighborhood contained in $X-A$.
+	\end{itemize}
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Limit and isolated points]
+Let $A$ be a subset of a topological space $X$.
+\begin{enumerate}[(i)]
+	\item A point $p\in X$ (not necessarily in $A$) is a \textbf{limit point} of $A$ if any neighborhood of $p$ contains a point of $A$ other than $p$. Limit points are also called \textbf{cluster points} and \textbf{accumulation} points.
+	\item A point $p\in A$ is \textbf{isolated in $A$} if $p$ has a neighborhood $N$ such that $N\cap A=\{p\}$. 
+\end{enumerate}
+Observe that any point of $A$ is either isolated in $A$ or a limit point of $A$.
+\end{definition}
+
+\begin{proposition}
+A set is closed if and only if it contains all of its limit points.
+\end{proposition}
+
+\begin{definition}[(Nowhere) dense sets]
+A subset $A$ of a topological space $X$ is said to be \textbf{dense} in $X$ if $\bar{A}=X$. Given a subset $S$ of $X$, $A$ is said to be dense in $S$ if $A\cap S$ is dense in $S$ (with the subset topology). It is said to be \textbf{nowhere dense} or \textbf{rare} in $X$ if $\bar{A}$ has empty interior. Equivalently $A$ is rare if it is not dense in any nonempty open subset of $X$. Equivalently, $A$ is rare if its exterior is dense in $X$. 
+\end{definition}
+
+
+
+
+\part{Manifolds}
+
+
+
+\printbibliography
+
+\end{document}
