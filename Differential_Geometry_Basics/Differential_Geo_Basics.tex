@@ -252,6 +252,14 @@ A subset $A$ of a topological space $X$ is said to be \textbf{dense} in $X$ if $
 	\end{enumerate}
 \end{proposition}
 
+\begin{proof}
+(i) Assume that $f$ is continuous. Then $f^{-1}(\overline{f(A)})$ is closed and contains $A$, so it must contain $\bar{A}$ and $f(\bar{A})\subseteq \overline{f(A)}$. Conversely, assume that $f$ satisfies the condition given in (i). For $F\subseteq Y$ closed, set $A:=f^{-1}(F)$. Then
+\begin{equation*}
+	f(\bar{A})\subseteq\overline{f(A)}\subseteq F
+\end{equation*}
+which implies $\bar{A}\subseteq f^{-1}(F)=A$, so $A$ is closed.
+\end{proof}
+
 \section{Generating topologies}
 
 
