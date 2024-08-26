@@ -105,6 +105,8 @@ General topology (more set-theoretic than algebraic, and not focused on finite-d
 
 \chapter{Topological spaces}
 
+\section{Basic definitions}
+
 \begin{definition}[Topology]
 A \textbf{topology} on a set $X$ is a collection $\tau$ of subsets of $X$ such that
 \begin{enumerate}[(i)]
@@ -202,8 +204,169 @@ A set is closed if and only if it contains all of its limit points.
 A subset $A$ of a topological space $X$ is said to be \textbf{dense} in $X$ if $\bar{A}=X$. Given a subset $S$ of $X$, $A$ is said to be dense in $S$ if $A\cap S$ is dense in $S$ (with the subset topology). It is said to be \textbf{nowhere dense} or \textbf{rare} in $X$ if $\bar{A}$ has empty interior. Equivalently $A$ is rare if it is not dense in any nonempty open subset of $X$. Equivalently, $A$ is rare if its exterior is dense in $X$. 
 \end{definition}
 
+\section{Maps between topological spaces}
+
+\begin{proposition}
+	Some basic properties of continuous maps.
+	\begin{enumerate}[(i)]
+		\item A constant map is continuous.
+		\item Compositions of continuous maps are continuous.
+		\item Let $X$ and $Y$ be two topological spaces. A map $f:X\to Y$ is continuous if and only if for any open subset $U$ of $X$, $f|_U$ is continuous. In particular the restriction of a continuous map to any open subset is continuous.
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}
+	Let $f:X\to Y$ be a map between two topological spaces.
+	\begin{enumerate}[(i)]
+		\item $f$ is \textbf{closed} if it takes closed subsets of $X$ to closed subsets of $Y$.
+		\item $f$ is \textbf{open} if it takes open subsets of $X$ to open subsets of $Y$.
+		\item $f$ is a \textbf{homeomorphism} if $f$ is a continuous bijection whose inverse is continuous.
+		\item $f$ is a \textbf{local homeomorphism} if any point of $X$ admits an open neighborhood $U$ such that $f|_U:U\to f(U)$ is a homeomorphism. Clearly a homeomorphism is a local homeomorphism.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Properties of local homeomorphisms]
+	Let $f:X\to Y$ be a local homeomorphism.
+	\begin{enumerate}[(i)]
+		\item $f$ is open and closed.
+		\item If $f$ is bijective, then $f$ is a homeomorphism.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Characterization of homeomorphism]
+	Let $f:X\to Y$ be a bijective continous map. The following are equivalent:
+	\begin{enumerate}[(i)]
+		\item $f$ is a homeomorphism.
+		\item $f$ is open.
+		\item $f$ is cosed.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Characterizing maps]
+	Let $f:X\to Y$ be a map between two topological spaces.
+	\begin{enumerate}[(i)]
+		\item $f$ is continous if and only if $f(\bar{A})\subseteq \overline{f(A)}$ for all $A\subseteq X$.
+		\item $f$ closed if and only if $f(\bar{A})\supseteq \overline{f(A)}$ for all $A\subseteq X$.
+		\item $f$ is continous if and only if $f^{-1}(\text{Int}B)\subseteq \text{Int}(f^{-1}(B))$ for all $B\subseteq Y$.
+		\item $f$ is open if and only if $f^{-1}(\text{Int}B)\supseteq \text{Int}(f^{-1}(B))$ for all $B\subseteq Y$.
+	\end{enumerate}
+\end{proposition}
+
+\section{Generating topologies}
 
 
+\begin{definition}[Comparing topologies]
+	Let $\tau$, $\tau'$ be topologies on a set $X$. When $\tau\subseteq \tau'$ we say that $\tau$ is \textbf{coarser} (or \textbf{smaller}) than $\tau'$, or that $\tau'$ is \textbf{finer} (or \textbf{larger}) than $\tau$. We say that $\tau$ and $\tau'$ are \textbf{comparable} if $\tau\subseteq\tau'$ or $\tau'\subseteq\tau$.
+\end{definition}
+\begin{example}
+	The finest topology on a set $X$ is the \textbf{discrete topology} $\tau=\mathcal{P}(X)$ (all subsets of $X$ are open for the discrete topology). The coarsest topology on a set $X$ is the \textbf{trivial} or \textbf{indiscrete topology} $\tau:=\{\emptyset,X\}$.
+\end{example}
+
+\begin{proposition}\label{prop:TopStableInt}
+	Let $(\tau_i)_{i\in I}$ be a family of topologies on a set $X$. Then the intersection $\tau:=\bigcap_{i\in I}\tau_i$ is a topology on $X$.
+\end{proposition}
+\begin{remark}
+	The empty intersection would yield the discrete topology.
+\end{remark}
+
+\begin{definition}[Preorder]
+	A binary relation $\leq$ on a set $A$ is a \textbf{preorder} if it is \textbf{reflexive} and \textbf{transitive}, meaning that for all $a,b,c\in A$
+	\begin{enumerate}[(i)]
+		\item (Reflexivity) $a\leq a$;
+		\item (Transivity) $a\leq b$ and $b\leq c$ implies $a\leq c$.
+	\end{enumerate}
+	We'll often use the word 'preorder' to refer to a pair $(A,\leq)$ consisting of a set $A$ and a preorder $\leq$ on $A$.
+\end{definition}
+
+\begin{definition}[Partial order]
+	A partial order on a set $A$ is a preoder $\leq$ on $A$ which is \textbf{antisymmetric} meaning that for all $a,b\in A$, $a\leq b$ and $b\leq a$ implies $a=b$. A \textbf{partially ordered set} or \textbf{poset} is a set together with a partial order (sometimes required to be nonempty).
+\end{definition}
+
+See personal notes on \textbf{lattices} \cite{personal:Lattices}. Given a subset $S$ of a poset $(P,\leq)$, the \textbf{supremum} of $S$ is sometimes called its \textbf{join}, while the \textbf{infimum} of $S$ is sometimes called its \textbf{meet}.
+
+Now let $\text{Top}(X)$ denote the set of topologies on $X$, which becomes a poset when equipped with the inclusion relation $\subseteq$. $(\text{Top}(X),\subseteq)$ admits top and bottom elements in the form of the discrete and indiscrete topologies. Furthermore, by proposition \ref{prop:TopStableInt}, $(\text{Top}(X),\subseteq)$ admits arbitrary meets (infima), which automatically implies that $(\text{Top}(X),\subseteq)$ admits arbitrary joins (the supremum of a subset $S$ of $\text{Top}(X)$ will be obtained as the infinimum of the upper bounds of $S$, see \cite{personal:Lattices}). Thus we see that $(\text{Top}(X),\subseteq)$ is a complete lattice.
+
+\begin{proposition}
+	$(\text{Top}(X),\subseteq)$ is a complete lattice.
+	\begin{enumerate}[(i)]
+		\item Its upper bound is $\mathcal{P}(X)$, its lower bound is $\{\emptyset,X\}$.
+		\item The infimum of a family $(\tau_i)_{i\in I}$ of topologies on $X$ is given by their intersection $\bigcap_{i\in I}\tau_i$.
+		\item The supremum $\bigvee_{i\in I}\tau_i$ of a family $(\tau_i)_{i\in I}$ of topologies on $X$ is the infimum of its upperbounds, i.e.
+		\begin{equation*}
+			\bigvee_{i\in I}\tau_i=\bigcap\{\tau\in\text{Top}(X)|\tau_i\subseteq\tau\text{ for all }i\in I\}.
+		\end{equation*}
+		Here the $\bigvee$ notation is warranted because $\bigvee_{i\in I}\tau_i$ will \emph{not} coincide with $\bigcup_{i\in I}\tau_i$ in general.
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Generated topology]
+	Let $\xi$ be a collection of subsets of $X$. The \textbf{topology generated by $\xi$}, denoted by $\langle\xi\rangle$, is defined to be the coarsest topology containing $\xi$, i.e.
+	\begin{equation*}
+		\langle\xi\rangle=\bigcap\{\tau\in\text{Top}(X)|\xi\subseteq\tau\}.
+	\end{equation*}
+	Given a topology $\tau$ on $X$, a collection $\xi$ of subsets of $X$ that generates $\tau$ in the above sense is called a \textbf{subbasis} of $\tau$.
+\end{definition}
+\begin{proposition}
+	The topology generated by $\xi$ is the collection of all unions of finite (possibly empty) intersections of elements of $\xi$.
+\end{proposition}
+\begin{remark}
+	Allowing for empty intersections of elements of $\xi$ is of crucial importance, as $X$ (the empty intersection) belongs to the generated topology.
+\end{remark}
+
+\begin{definition}[Basis for a given topology]
+	Let $\tau$ be a topology on a set $X$. A \textbf{basis} for $\tau$ is a subcollection $\beta\subseteq\tau$ such that any open of $\tau$ is a union of elements of $\beta$ (note that the empty union is the empty set). In that case it is easy to see that $\tau$ is the topology generated by $\beta$.
+\end{definition}
+\begin{proposition}
+	$\beta\subseteq\tau$ is a basis of $\tau$ if and only if for any open $U$ and any point $p\in U$ there exists $B\in\beta$ such that $p\in B\subseteq U$.
+\end{proposition}
+
+A criterion that determines whether a collection of subsets is the basis of some topology.
+\begin{proposition}
+	Let $\beta$ be a collection of subsets of $X$. Then $\beta$ is the basis of the topology $\langle\beta\rangle$ it generates if and only if
+	\begin{enumerate}[(i)]
+		\item $\beta$ covers $X$, meaning that $X=\bigcup\beta$;
+		\item For any pair $A,B\in\beta$ and any point $p\in A\cap B$ there exists $C\in\beta$ such that $p\in C\subseteq A\cap B$.
+	\end{enumerate}
+\end{proposition}
+
+\section{Metrizable spaces and convergence}
+
+\begin{definition}[Convergence]
+	Let $X$ be a topological space. A sequence $(x_n)_{n\in\mathbb{N}}$ in $X$ \textbf{converges} to a point $x\in X$ if $(x_n)_n$ is \textbf{eventually} in any neighborhood of $x$, i.e. if for any open neighborhood $U$ of $x$, there exists $N\in\mathbb{N}$ such that $x_m\in U$ for all $m\geq N$. We then write $\lim_{n\to\infty}x_n=x$ or $x_n\to x$.
+\end{definition}
+
+\begin{definition}[Metric]
+	A \textbf{metric} on a set $X$ is a map $d:X\times X\to\mathbb{R}$ with the following property:
+	\begin{enumerate}[(i)]
+		\item (Positivity) $d(x,y)\geq 0$ for all $x,y\in X$ and $d(x,y)=0$ if and only if $x=y$;
+		\item (Symmetry) $d(x,y)=d(y,x)$ for all $x,y\in X$;
+		\item (Triangle inequality) $d(x,z)\leq d(x,y)+d(y,z)$ for all $x,y,z\in X$.
+	\end{enumerate}
+	A \textbf{metric space} is a set equipped with a metric.
+\end{definition}
+
+\begin{definition}[Induced topology]
+	Let $(X,d)$ be a metric space.
+	\begin{enumerate}[(i)]
+		\item For $r>0$ and $x\in X$, the \textbf{open ball of radius r around x} is the set
+		\begin{equation*}
+			B_r(x):=\{y\in X|d(x,y)<r\}.
+		\end{equation*}
+		\item For $r\geq 0$ and $x\in X$, the \textbf{closed ball of radius r around x} is the set
+		\begin{equation*}
+			\bar{B}_r(x):=\{y\in X|d(x,y)\leq r\}.
+		\end{equation*}
+		\item The topology on $X$ induced by $d$ is the topology generated by the open balls, which form a basis for that topology. In other words, a subset of $X$ is open for the induced topology if it contains an open ball around each of its points.
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Metrizable space]
+	A topology $\tau$ on a set $X$ is said to be \textbf{metrizable} if it there exists a metric on $X$ that induces $\tau$.
+\end{definition}
+
+\begin{proposition}
+	A sequence $(x_n)_n$ in a metric space $(X,d)$ converges to $x$ if and only if for any $\epsilon>0$ there exists $N\in\mathbb{N}$ such that $d(x_m,x)<\epsilon$ for all $m\geq N$.
+\end{proposition}
 
 \part{Manifolds}
 
