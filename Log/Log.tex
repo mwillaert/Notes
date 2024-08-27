@@ -50,7 +50,7 @@
 %Packages for references, Indices
 
 \usepackage{imakeidx}[intoc]
-\usepackage{biblatex}
+\usepackage[backend=biber]{biblatex}
 \addbibresource{../refs.bib}
 \addbibresource{dailyrefs.bib}
 
@@ -100,13 +100,35 @@ Defining tangent spaces as quotients of the ring of germs (an approach closer to
 
 Categorical approach to manifolds (fibered manifolds, fiber bundles, transversal map and the pullback,...) \cite{KMS:NatDiffGeo}.
 
+Infinite dimensional manifolds in the online supplement of \cite{Lee:ManDiffGeo}.
+
 General topology \cite{Munkres:Top}. Different axioms, filters and nets (also related to logic and Stone spaces), convergence spaces. \cite{Wiki:AxiomTop,Wiki:FiltersTop,Wiki:ConvergenceSpace}. Categorical approach to topology (quotients, products, subspaces,...) \cite{Lee:IntTopMan}.
 
 \subsection{Writing}
 
 In \cite{personal:BasicsDiffGeo}, topology: basic definitions, maps between topological spaces ((local) homeos, open and closed maps, characterizing continuous maps), generating topologies (link with lattices \cite{personal:Lattices}, metrizable spaces and convergence.
 
+\section{Work, Monday 26/08/24}
 
+Planning of the defence of my master's thesis \cite{personalHand:MasterThesis}.
+
+\subsection{Musings}
+
+Elucidating the bundles associated to a principal $G$-bundle $P$, also called \textbf{$G$-structures}. They are those fiber bundles whose structure group can be reduced to $G$, i.e. they admit a trivializing atlas/cover with transition maps taking value in $G$ (automatically verifies cocycle condition). $P$ is then the principal bundle induced by this cocycle. The usual interpretation: $G$ is usually the Lie subgroup preserving a structure $\xi$ on $F$, a $G$-structure $E$ is then fiber bundle locally isomorphic to $U\times F$ with transition maps preserving the structure $\xi$ on $F$. So a $G$-structure is a bundle with standard fiber bundle equipped with a structure in the family of $\xi$ ($\xi$ serves as the standard model for this family).
+
+Let $G$ act on $F$, so that we can construct the associated bundle $E:=P\times_GF=P\times F/G$. The connections on $E$ compatible with the $G$-structure of $E$ are those induced by principal connections on $P$ (what structure do they preserve exactly? -> usually the structure modelled by $\xi$, which will be required to be preserved by parallel transport).
+
+The pullback seems to invtervene in this discussion in the following way: the trivial bundle $P\times F$ over $P$ equipped with the quotient map $q:P\times G\to P\times F/G=E$ is a pullback of $E\to M$ along the projection $\pi:P\to M$, i.e. $P\times F\simeq \pi^*E$. Conversely, given a local section $\sigma :U\to P$ of $P$, $E|_U\simeq \sigma^*(P\times F)$, the restriction of $E$ to $U$ is the pullback of $P\times F$ along $\sigma$. Given a principal connection on $P$, can the connection induced on $E$ be obtained via a connection on $P\times F$.
+
+To make this discussion precise, I could maybe consult \cite{KMS:NatDiffGeo} and \cite{vakar:BundlesGauges}.
+
+\subsection{Encounters}
+
+In \cite{KMS:NatDiffGeo} the characterization of \textbf{initial submanifolds} (called \textbf{weakly embedded submanifolds} in \cite{Lee:IntSmMan}), the universal property of \textbf{submersions} (also called \textbf{fibered manifolds}).
+
+\section{Work, Tuesday 27/08/24}
+
+Taking inspiration on the chapter of \cite{KN:FundDiffGeo} dedicated to invariant affine connections, we try to give a description of invariant affine connections on homogeneous spaces that does not invoke principal connections. This is handwritten \cite{personalHand:Connections} (in the "probing" notebook).
 
 
 
