@@ -128,9 +128,85 @@ In \cite{KMS:NatDiffGeo} the characterization of \textbf{initial submanifolds} (
 
 \section{Work, Tuesday 27/08/24}
 
-Taking inspiration on the chapter of \cite{KN:FundDiffGeo} dedicated to invariant affine connections, we try to give a description of invariant affine connections on homogeneous spaces that does not invoke principal connections. This is handwritten \cite{personalHand:Connections} (in the "probing" notebook).
+Taking inspiration from the chapter of Kobayashi-Nomizu \cite{KN:FundDiffGeo} dedicated to invariant affine connections, we try to give a description of invariant affine connections on homogeneous spaces that does not invoke principal connections. This is handwritten \cite{personalHand:Connections} (in the "probing" notebook).
 
+The way that an invariant affine connection on $M=K/H$ is introduced in Kobayashi-Nomizu is via a principal connection on the bundle of bases $L(M)$. This is achieved by specifying a $K$-invariant connection form $\omega$ on $L(M)$ which, according to the theorem of Wang on invariant principal connections, is encoded in a linear map
+\begin{equation*}
+	\Lambda:\mathfrak{k}\to gl_n(\mathbb{R})
+\end{equation*}
+(with $\mathfrak{k}$ the Lie algebra of $K$) after a choice of reference point $u_0\in L_0(M)$ (Note: $0=H\in K/H=M$ is the reference point chosen on $M$, i.e. $K$ acts transitively on $M$ and $H=\text{Stab}_K(0)$). To the linear map $\Lambda$ we then associate the unique $K$-invariant connection form $\omega$ for which
+\begin{equation*}
+	\omega_{u_0}(\hat{X})=\Lambda(X)
+\end{equation*}
+for all $X\in\mathfrak{k}$, where $\hat{X}\in\mathfrak{X}(L(M))$ denotes the horizontal lift of $\tilde{X}\in\mathfrak{X}(M)$, the fundamental vector field on $M$ associated to $X$ (whose flow is given by $e^{tX}$). This formula will not yield a well-defined connection form for any choice of $\Lambda$, the class of linear maps $\Lambda:\mathfrak{k}\to gl_n(\mathbb{R})$ for which this process works are precisely the ones satisfying the following two conditions:
+\begin{enumerate}[(i)]
+	\item $\Lambda(X)=\lambda(X)$ for all $X\in\mathfrak{h}$ (the Lie algebra of $H$), where $\lambda:\mathfrak{h}\to gl_n(\mathbb{R})$ is the Lie algebra morphism induced by the group morhpism $H\to GL_n(\mathbb{R}),h\to u^{-1}_0\circ h_{*0}\circ u_0$, which we also denote by $\lambda:H\to GL_n(\mathbb{R})$ (here $u_0$ is seen as a linear isomorphism $\mathbb{R}^n\to T_0M$). The group morphism $H\to GL(T_0M),h\to h_{*0}$ (to which $\lambda$ is conjugate) is called the \textbf{linear isotropy representation of $H$}.
+	\item $\Lambda(ad(h)X)=ad(\lambda(h))\Lambda(X)=\lambda(h)\circ\Lambda(X)\circ\lambda(h)^{-1}$  for all $h\in H$, $X\in\mathfrak{k}$.
+\end{enumerate}
 
+As indicated in Kobayashi-Nomizu, the link between the linear map $\Lambda$ and the covariant derivative $\nabla$ of the invariant affine connection is the following:
+\begin{equation*}
+	u_0\circ\Lambda(X)\circ u^{-1}_0=A_{\tilde{X}}|_0
+\end{equation*}
+where $A_{\tilde{X}}$ is the endomorphism field $A_{\tilde{X}}:=\nabla_{\tilde{X}}-\mathcal{L}_{\tilde{X}}$. So a theorem of Wang for invariant affine connections that bypasses the formalism of principal connections can take the following form:
+
+\begin{theorem}\label{thm:AffineWangAX}
+ There is a one-to-one correspondence between invariant affine connections on $M=K/H$ and linear maps $\Lambda:\mathfrak{k}\to\text{End}(T_0M)$ satisfying
+	\begin{enumerate}[(i)]
+		\item $\Lambda(X)=\lambda(X)$ for all $X\in\mathfrak{h}$, where $\lambda:\mathfrak{h}\to\text{End}(T_0M)$ is the Lie algebra morphism induced by the linear isotropy representation $\lambda:H\to GL(T_0M),h\to h_{*0}$.
+		\item $\Lambda(ad(h)X)=h_{*0}\circ \Lambda(X)\circ h^{-1}_{*0}$ for all $X\in\mathfrak{k}$, $h\in H$.
+	\end{enumerate}
+\end{theorem}
+
+Once such a linear map $\Lambda$ is fixed, the corresponding affine connection is the unique one for which
+\begin{equation*}
+	A_{\tilde{X}}|_0=\Lambda(X)
+\end{equation*}
+for all $X\in\mathfrak{k}$. Note that an affine connection on a manifold $M$ is equivalent to the datum of an $\mathbb{R}$-linear map
+\begin{equation*}
+A:\mathfrak{X}(M)\to\Omega^1(M,TM),X\to A_X
+\end{equation*}
+such that $A_{fX}=X\otimes df+fA_X$ for all $X\in\mathfrak{X}(M)$ and $f\in C^{\infty}(M)$. The corresponding covariant derivative $\nabla$ is then the unique one satisfying
+\begin{equation*}
+A_X=\nabla_X-\mathcal{L}_X.
+\end{equation*}
+To recover $A$ from $\Lambda$ we start by obtaining a global expression for $A_{\tilde{X}}$ for all $X\in\mathfrak{k}$. This is obtained via the following formula
+\begin{equation*}
+	A_{\tilde{X}}|_{p=k0}=k_{*0}\Lambda[ad(k^{-1})X]k^{-1}_{*p}
+\end{equation*}
+(the appearance of $ad(k^{-1})$ is linked to the formula $k_*\tilde{X}=\widetilde{ad(k)X}$ for fundamental vector fields). This formula yields a well-defined endomorphism field $A_{\tilde{X}}$ thanks to condition (ii) in theorem \ref{thm:AffineWangAX}.
+
+Once the fields $A_{\tilde{X}}$ are fixed for all $X\in\mathfrak{k}$, we recover $A_X$ for any vector field $X\in\mathfrak{X}(M)$ in the following way: if, over an open subset $U$ of $M$, we have $X|_U=\sum_{i=1}^af_i\tilde{X}_i|_U$ for $f_j\in C^{\infty}(U)$ and $X_j\in\mathfrak{k}$, we set
+\begin{equation*}
+A_X=\sum_{i=1}^a\left(\tilde{X}_i\otimes df_i+f_iA_{\tilde{X}_i}\right)
+\end{equation*}
+(over $U$). This works for the following two reasons:
+\begin{itemize}
+	\item Since $K$ acts transitively on $M$ (and by the rank theorem), for any point $p\in M$, there exists an open neighborhood $U$ of $p$ and a family $X_1,...,X_m$ in $\mathfrak{k}$ such that $(\tilde{X}_i)_{i=1}^m$ forms a local frame of $TM$ over $U$.
+	\item By point (i) in theorem \ref{thm:AffineWangAX}, we can show that if
+	\begin{equation*}
+		\sum_{i=1}^af_i\tilde{X}_i|_U=\sum_{j=1}^bg_i\tilde{Y}_i|_U
+	\end{equation*}
+	for $f_i,g_j\in C^{\infty}(M)$ and $X_i,Y_j\in\mathfrak{k}$, then
+	\begin{equation*}
+	\sum_{i=1}^a\left(\tilde{X}_i\otimes df_i+f_iA_{\tilde{X}_i}\right)=\sum_{j=1}^b\left(\tilde{Y}_j\otimes dg_j+g_jA_{\tilde{X}_j}\right).
+	\end{equation*}
+	Key observations that allow us to prove this are the following: Firstly that, given a vector field $X\in\mathfrak{X}(M)$ that vanishes at some point $p\in M$, the Lie derivative by $X$ induces a linear map $\mathcal{L}^{(p)}_X:T_pM\to T_pM$ defined by
+	\begin{equation}
+	\mathcal{L}^{(p)}_XY_p:=\left.\frac{d}{dt}\right|_{t=0}\Phi^X_{-t*p}Y_p
+	\end{equation}
+	for all $Y_p\in T_pM$ (where $\Phi^X$ denotes the flow of $X$), meaning that for any $Y\in\mathfrak{X}(M)$, we have $[X,Y]_p=\mathcal{L}^{(p)}_XY_p$. Secondly, that when applied to a fundamental vector field $\tilde{Z}$ (for some $Z\in\mathfrak{k}$) with $\tilde{Z}_p=0$, this yields $\lambda^{(p)}(Z)=-\mathcal{L}^{(p)}_{\tilde{Z}}$, with $\lambda^{(p)}:\text{Lie}(\text{Stab}_K(p))\to\text{End}(T_pM)$, the Lie algebra morphism induced by the linear isotropy representation at $p$, $\lambda^{(p)}:\text{Stab}_K(p)\to\text{End}(T_pM),s\to s_{*p}$. Note that if $\tilde{Z}_p=0$ then $Z$ belongs to the Lie algebra of $\text{Stab}_K(p)$.
+\end{itemize}
+
+Our final objective is to arrive at a "linear algebraic" description of homogeneous symplectic spaces with invariant symplectic connections. Thus the next steps should be the following:
+\begin{enumerate}
+	\item Describe a $K$-invariant tensor in terms of its evaluation at $0\in M$.
+	\item Describe the exterior derivative of a $K$-invariant form.
+	\item Describe an invariant symplectic form.
+	\item Describe the curvature and torsion of an invariant affine connection in terms of $\Lambda$.
+	\item Describe the covariant derivative of an invariant tensor field by an invariant affine connection in terms of $\Lambda$ and the evaluation of the tensor field at $0$.
+	\item lastly, give a description of invariant symplectic connections on homogeneous symplectic spaces.
+\end{enumerate}
 
 \printbibliography
 
