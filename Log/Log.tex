@@ -94,7 +94,7 @@ The foundations of differential geometry.
 
 $C^0$ manifolds may not have $C^k$ structures for $k\geq 1$. If such structures exist, several inequivalent structures may arise (e.g. uncountably many inequivalent smooth structures on $\mathbb{R}^4$, or several smooth structures on $\mathbb{S}^7$). For $k\geq 1$, a $C^k$ manifold will have a unique (up to iso.) smooth structure, and even a unique (up to iso) analytic structure (based on the work of Whitney) \cite{Overflow:ManifoldAnalyticStructure,Stack:WhitneyAnalyticEmbedding}.
 
-Properties of analytic manifolds. Smooth geometry relies on a handful of theorems from analysis, mainly the inverse mapping theorem and the standard existence uniqueness and regularity results from analysis. So it is useful to have their analogues in (real or complex) analytic geometry \cite{Narasimhan:AnalysisRealComplexMan,Bourbaki:VarietesDiffAnalytic}.
+Properties of analytic manifolds. Smooth geometry relies on a handful of theorems from analysis, mainly the inverse mapping theorem and the standard existence uniqueness and regularity results for ODE's. So it is useful to have their analogues in (real or complex) analytic geometry \cite{Narasimhan:AnalysisRealComplexMan,Bourbaki:VarietesDiffAnalytic}.
 
 Defining tangent spaces as quotients of the ring of germs (an approach closer to algebraic geometry?) \cite{Warner:DiffMan}.
 
@@ -106,7 +106,7 @@ General topology \cite{Munkres:Top}. Different axioms, filters and nets (also re
 
 \subsection{Writing}
 
-In \cite{personal:BasicsDiffGeo}, topology: basic definitions, maps between topological spaces ((local) homeos, open and closed maps, characterizing continuous maps), generating topologies (link with lattices \cite{personal:Lattices}, metrizable spaces and convergence.
+In \cite{personal:BasicsDiffGeo}, topology: basic definitions, maps between topological spaces ((local) homeos, open and closed maps, characterizing continuous maps), generating topologies (link with lattices \cite{personal:Lattices}), metrizable spaces and convergence.
 
 \section{Work, Monday 26/08/24}
 
@@ -114,11 +114,11 @@ Planning of the defence of my master's thesis \cite{personalHand:MasterThesis}.
 
 \subsection{Musings}
 
-Elucidating the bundles associated to a principal $G$-bundle $P$, also called \textbf{$G$-structures}. They are those fiber bundles whose structure group can be reduced to $G$, i.e. they admit a trivializing atlas/cover with transition maps taking value in $G$ (automatically verifies cocycle condition). $P$ is then the principal bundle induced by this cocycle. The usual interpretation: $G$ is usually the Lie subgroup preserving a structure $\xi$ on $F$, a $G$-structure $E$ is then fiber bundle locally isomorphic to $U\times F$ with transition maps preserving the structure $\xi$ on $F$. So a $G$-structure is a bundle with standard fiber bundle equipped with a structure in the family of $\xi$ ($\xi$ serves as the standard model for this family).
+Elucidating the bundles associated to a principal $G$-bundle $P$, also called \textbf{$G$-structures}. They are those fiber bundles whose structure group can be reduced to $G$, i.e. they admit a trivializing atlas/cover with transition maps taking value in $G$ (automatically verifies cocycle condition if $G$ acts faithfully on the standard fiber). $P$ is then the principal bundle induced by this cocycle. The usual interpretation: $G$ is usually the Lie subgroup preserving a structure $\xi$ on $F$, a $G$-structure $E$ is then a fiber bundle locally isomorphic to $U\times F$ with transition maps preserving the structure $\xi$ on $F$. So a $G$-structure is a bundle with standard fiber $F$ equipped with a structure in the family of $\xi$ ($\xi$ serves as the standard model for this family).
 
 Let $G$ act on $F$, so that we can construct the associated bundle $E:=P\times_GF=P\times F/G$. The connections on $E$ compatible with the $G$-structure of $E$ are those induced by principal connections on $P$ (what structure do they preserve exactly? -> usually the structure modelled by $\xi$, which will be required to be preserved by parallel transport).
 
-The pullback seems to invtervene in this discussion in the following way: the trivial bundle $P\times F$ over $P$ equipped with the quotient map $q:P\times G\to P\times F/G=E$ is a pullback of $E\to M$ along the projection $\pi:P\to M$, i.e. $P\times F\simeq \pi^*E$. Conversely, given a local section $\sigma :U\to P$ of $P$, $E|_U\simeq \sigma^*(P\times F)$, the restriction of $E$ to $U$ is the pullback of $P\times F$ along $\sigma$. Given a principal connection on $P$, can the connection induced on $E$ be obtained via a connection on $P\times F$.
+The pullback seems to intervene in this discussion in the following way: the trivial bundle $P\times F$ over $P$ equipped with the quotient map $q:P\times G\to P\times F/G=E$ is a pullback of $E\to M$ along the projection $\pi:P\to M$, i.e. $P\times F\simeq \pi^*E$. Conversely, given a local section $\sigma :U\to P$ of $P$, $E|_U\simeq \sigma^*(P\times F)$, the restriction of $E$ to $U$ is the pullback of $P\times F$ along $\sigma$. Given a principal connection on $P$, can the connection induced on $E$ be obtained via a connection on $P\times F$?
 
 To make this discussion precise, I could maybe consult \cite{KMS:NatDiffGeo} and \cite{vakar:BundlesGauges}.
 
