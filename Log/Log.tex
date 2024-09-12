@@ -86,6 +86,15 @@
 
 \tableofcontents
 
+\section{Things to do}
+
+\subsection{Differential geometry}
+
+(Infinitesimal) automorphism of the tensor algebra $TV$ of a vector field $V$ (require compatibility with tensor product and contraction), are they always induced by an automorphism of $V$? Infinitesimal automorphisms=0-derivations compatible with contraction.
+Extend it to the tensor algebra of a vector bundle, for that add locality condition (compatibility with restriction - morphism of sheaves). This is motivated by the bundle morphism $A_X:=\nabla_X-\mathcal{L}_X$ for an affine connection $\nabla$ (see \ref{tue27/08/24}).
+
+The Bianchi identities from the exterior covariant derivative on vector bundles.
+
 \section{Personal, Sunday 25/08/24}
 
 The foundations of differential geometry.
@@ -126,7 +135,7 @@ To make this discussion precise, I could maybe consult \cite{KMS:NatDiffGeo} and
 
 In \cite{KMS:NatDiffGeo} the characterization of \textbf{initial submanifolds} (called \textbf{weakly embedded submanifolds} in \cite{Lee:IntSmMan}), the universal property of \textbf{submersions} (also called \textbf{fibered manifolds}).
 
-\section{Work, Tuesday 27/08/24}
+\section{Work, Tuesday 27/08/24}\label{tue27/08/24}
 
 Taking inspiration from the chapter of Kobayashi-Nomizu \cite{KN:FundDiffGeo} dedicated to invariant affine connections, we try to give a description of invariant affine connections on homogeneous spaces that does not invoke principal connections. This is handwritten \cite{personalHand:Connections} (in the "probing" notebook).
 
@@ -207,6 +216,50 @@ Our final objective is to arrive at a "linear algebraic" description of homogene
 	\item Describe the covariant derivative of an invariant tensor field by an invariant affine connection in terms of $\Lambda$ and the evaluation of the tensor field at $0$.
 	\item lastly, give a description of invariant symplectic connections on homogeneous symplectic spaces.
 \end{enumerate}
+
+\section{Work, Thursday 12/09/24}\label{thur12/09/24}
+
+(Handwritten notes "Mémoire/Connexions perso" \cite{personalHand:MasterThesis}) Encoding invariant tensor fields on the homogeneous space $M=K/H$, and dealing with the special case of covariant tensor fields, which we can pullback along the projection
+\begin{equation*}
+	\pi:K\to M=K/H,k\to ko
+\end{equation*}
+(with $o\in M=K/H$ a reference point, $H=\text{Stab}_K(o)$) which is equivariant.
+
+\begin{theorem}[Invariant tensor fields on $M=K/H$]
+	A tensor $T_o\in T^r_sT_oM$ is said to be $H$-invariant if for all $h\in H$ we have
+	\begin{equation*}
+		h_{*o}\cdot T_o=T_o.
+	\end{equation*}
+	Given such a tensor, there exists a unique invariant tensor field $T\in\Gamma(T^r_sM)$ whose evaluation at $o$ is $T_o$. Thus there is a 1:1 correspondence between invariant $(r,s)$ tensor fields and $H$-invariant elements of $T^r_sT_oM$.
+\end{theorem}
+
+Given an invariant covariant tensor field $\alpha$ on $M$, we can define $\pi^*\alpha$ over $K$, which is left-invariant. Because $\pi$ is a submersion, $\pi^*\alpha$ determines $\alpha$. The theorem below delineates the class of left-invariant covariant tensor fields on $K$ corresponding to invariant tensor fields on $M$.
+
+\begin{theorem}[Invariant covariant tensor fields]
+	A tensor $\bar{\alpha}_e\in T_k\mathfrak{k}$ is said to be $Ad(H)$-invariant if for all $h\in H$ we have
+	\begin{equation*}
+		Ad(h)^*\bar{\alpha}_e=\bar{\alpha}_e.
+	\end{equation*}
+	We say that $\bar{\alpha}_e$ annihilates $\mathfrak{h}$ if for all $X_j\in\mathfrak{k}$,
+	\begin{equation*}
+		\bar{\alpha}_e(X_1,...,X_k)=0
+	\end{equation*}
+	As soon as $X_j\in\mathfrak{h}$ for some $1\leq j\leq k$. Given such a tensor, there exists a unique invariant tensor field $\alpha\in\Gamma(T_kM)$ such that
+	\begin{equation*}
+		(\pi_{*e})^*\alpha_0=\bar{\alpha}_e.
+	\end{equation*}	 
+	Thus there is a 1:1 correspondence between invariant covariant $k$-tensor fields on $M$ and $Ad(H)$-invariant elements of $T_k\mathfrak{k}$.
+\end{theorem}
+\begin{remark}
+	There is a 1:1 correspondence between left-invariant $(r,s)$ tensor fields on $K$ and elements of $T^r_s\mathfrak{k}$, since $Stab_k(e)=e$. So there exists a unique left-invariant covariant $k$-tensor field $\bar{\alpha}$ over $K$ whose evaluation at $e$ is $\bar{\alpha}_e$, and we have $\pi^*\alpha=\bar{\alpha}$.
+\end{remark}
+\begin{remark}
+	The $Ad(H)$ invariance is linked to the fact that for any $h\in H$
+	\begin{equation*}
+		\pi\circ Ad(h)=h\circ\pi
+	\end{equation*}
+	This is because $\pi\circ R_h=\pi$ for all $h\in H$.
+\end{remark}
 
 \printbibliography
 
